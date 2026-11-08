@@ -32,10 +32,10 @@ jobs:
           [ ! -d luci-app-lucky ] && git clone --depth 1 https://github.com/gdy666/luci-app-lucky.git
           [ ! -d luci-app-pushbot ] && git clone --depth 1 https://github.com/zzsj0928/luci-app-pushbot.git
           cd ..
-      - name: 移除tools/ninja，规避python pipes库缺失报错
+      - name: tools/ninja补丁
         run: |
-          sed -i 's/import pipes/import shlex/g' tools/ninja/configure.py
-          sed -i 's/pipes.quote/shlex.quote/g' tools/ninja/configure.py
+          sed -i 's/import pipes/import shlex/g' build_dir/host/ninja-*/configure.py
+          sed -i 's/pipes.quote/shlex.quote/g' build_dir/host/ninja-*/configure.py
       - name: 复制自定义files目录
         run: |
           cp -r configs/files ./files
