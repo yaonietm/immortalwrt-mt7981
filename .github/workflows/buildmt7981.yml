@@ -34,7 +34,7 @@ jobs:
           cd ..
       - name: 移除tools/ninja，规避python pipes库缺失报错
         run: |
-          sed -i '/call tool\/ninja/d' tools/Makefile
+          rm -rf tools/ninja
       - name: 复制自定义files目录
         run: |
           cp -r configs/files ./files
