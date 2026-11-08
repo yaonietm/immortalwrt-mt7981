@@ -4,7 +4,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: 扩容磁盘
         uses: easimon/maximize-build-space@master
@@ -32,10 +32,7 @@ jobs:
           [ ! -d luci-app-lucky ] && git clone --depth 1 https://github.com/gdy666/luci-app-lucky.git
           [ ! -d luci-app-pushbot ] && git clone --depth 1 https://github.com/zzsj0928/luci-app-pushbot.git
           cd ..
-      - name: tools/ninja补丁
-        run: |
-          sed -i 's/import pipes/import shlex/g' build_dir/host/ninja-*/configure.py
-          sed -i 's/pipes.quote/shlex.quote/g' build_dir/host/ninja-*/configure.py
+
       - name: 复制自定义files目录
         run: |
           cp -r configs/files ./files
