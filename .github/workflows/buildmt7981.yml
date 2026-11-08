@@ -34,7 +34,8 @@ jobs:
           cd ..
       - name: 移除tools/ninja，规避python pipes库缺失报错
         run: |
-          rm -rf tools/ninja
+          sed -i 's/import pipes/import shlex/g' tools/ninja/configure.py
+          sed -i 's/pipes.quote/shlex.quote/g' tools/ninja/configure.py
       - name: 复制自定义files目录
         run: |
           cp -r configs/files ./files
