@@ -32,6 +32,9 @@ jobs:
           [ ! -d luci-app-lucky ] && git clone --depth 1 https://github.com/gdy666/luci-app-lucky.git
           [ ! -d luci-app-pushbot ] && git clone --depth 1 https://github.com/zzsj0928/luci-app-pushbot.git
           cd ..
+      - name: 移除tools/ninja，规避python pipes库缺失报错
+        run: |
+          sed -i '/call tool\/ninja/d' tools/Makefile
       - name: 复制自定义files目录
         run: |
           cp -r configs/files ./files
@@ -43,7 +46,7 @@ jobs:
 
       - name: 编译固件
         run: |
-          make -j1 V=sc
+          make -j$(nproc)
 
       - name: 上传固件
         uses: actions/upload-artifact@v4
